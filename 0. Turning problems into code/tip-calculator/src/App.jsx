@@ -7,11 +7,12 @@ function App() {
   const [total, setTotal] = useState(0);
   const billAmountRef = useRef(true);
   const tipRateRef = useRef(true);
+  const [hadCalculate, setHadCalculate] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     calculateTip();
-    console.log(tip, total);
+    setHadCalculate(true);
   }
 
   function handleChange(e, setAmount) {
@@ -40,19 +41,21 @@ function App() {
 
   return (
     <form onSubmit={handleSubmit} className='form-container'>
-      <h1>Simple Tips Calculator</h1>
-      <label htmlFor='bill'>Bill Amount: RM</label>
-      <input
-        type='number'
-        id='bill'
-        name='bill-amount'
-        value={billAmount}
-        step={0.01}
-        min={0}
-        max={999999}
-        onChange={(e) => handleChange(e, setBillAmount)}
-        onClick={() => handleClick(setBillAmount, billAmountRef)}
-      />
+      <div>
+        <h1>Simple Tips Calculator</h1>
+        <label htmlFor='bill'>Bill Amount: RM</label>
+        <input
+          type='number'
+          id='bill'
+          name='bill-amount'
+          value={billAmount}
+          step={0.01}
+          min={0}
+          max={999999}
+          onChange={(e) => handleChange(e, setBillAmount)}
+          onClick={() => handleClick(setBillAmount, billAmountRef)}
+        />
+      </div>
 
       <div>
         <label htmlFor='tip-rate'>Tip Rate: </label>
@@ -71,6 +74,12 @@ function App() {
       </div>
 
       <button type='submit'>Calculate</button>
+
+      {hadCalculate && (
+        <button onClick={() => window.location.reload()}>
+          Calculate again
+        </button>
+      )}
 
       <div>
         <p>Tip: RM {tip}</p>
