@@ -60,17 +60,16 @@ function App() {
       <div>
         <label htmlFor='tip-rate'>Tip Rate: </label>
         <input
-          type='number'
+          type='range'
           id='tip-rate'
           name='tip-rate'
           value={tipRate}
-          step={0.01}
+          step={1}
           min={0}
           max={100}
           onChange={(e) => handleChange(e, setTipRate)}
-          onClick={() => handleClick(setTipRate, tipRateRef)}
         />
-        <span>%</span>
+        <span>{tipRate}%</span>
       </div>
 
       <button type='submit'>Calculate</button>
