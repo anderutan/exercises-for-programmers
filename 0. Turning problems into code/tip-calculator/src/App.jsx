@@ -10,7 +10,6 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     calculateTip();
-    setHadCalculate(true);
   }
 
   function handleChange(e, setAmount) {
