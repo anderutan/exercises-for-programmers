@@ -6,8 +6,6 @@ function App() {
   const [tipRate, setTipRate] = useState(0);
   const [total, setTotal] = useState(0);
   const billAmountRef = useRef(true);
-  const tipRateRef = useRef(true);
-  const [hadCalculate, setHadCalculate] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -41,48 +39,59 @@ function App() {
 
   return (
     <form onSubmit={handleSubmit} className='form-container'>
+      <h1>Simple Tips Calculator</h1>
       <div>
-        <h1>Simple Tips Calculator</h1>
-        <label htmlFor='bill'>Bill Amount: RM</label>
-        <input
-          type='number'
-          id='bill'
-          name='bill-amount'
-          value={billAmount}
-          step={0.01}
-          min={0}
-          max={999999}
-          onChange={(e) => handleChange(e, setBillAmount)}
-          onClick={() => handleClick(setBillAmount, billAmountRef)}
-        />
+        <label htmlFor='bill'>Bill Amount</label>
+        <div>
+          <span>RM</span>
+          <input
+            type='number'
+            id='bill'
+            name='bill-amount'
+            value={billAmount}
+            step={0.01}
+            min={0}
+            max={999999}
+            onChange={(e) => handleChange(e, setBillAmount)}
+            onClick={() => handleClick(setBillAmount, billAmountRef)}
+          />
+        </div>
+        <div>
+          <div>
+            <label htmlFor='tip-rate'>Tip Rate: </label>
+            <span>{tipRate}%</span>
+          </div>
+          <input
+            type='range'
+            id='tip-rate'
+            name='tip-rate'
+            value={tipRate}
+            step={1}
+            min={0}
+            max={100}
+            onChange={(e) => handleChange(e, setTipRate)}
+          />
+        </div>
+        <div>
+          <button type='submit'>Calculate</button>
+
+          <button onClick={() => window.location.reload()}>Restart</button>
+        </div>
       </div>
 
       <div>
-        <label htmlFor='tip-rate'>Tip Rate: </label>
-        <input
-          type='range'
-          id='tip-rate'
-          name='tip-rate'
-          value={tipRate}
-          step={1}
-          min={0}
-          max={100}
-          onChange={(e) => handleChange(e, setTipRate)}
-        />
-        <span>{tipRate}%</span>
-      </div>
-
-      <button type='submit'>Calculate</button>
-
-      {hadCalculate && (
-        <button onClick={() => window.location.reload()}>
-          Calculate again
-        </button>
-      )}
-
-      <div>
-        <p>Tip: RM {tip}</p>
-        <p>Total: RM {total}</p>
+        <div>
+          <p>Bill</p>
+          <p>RM {billAmount}</p>
+        </div>
+        <div>
+          <p>Tip</p>
+          <p>RM {tip}</p>
+        </div>
+        <div>
+          <p>Total</p>
+          <p>RM {total}</p>
+        </div>
       </div>
     </form>
   );
