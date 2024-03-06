@@ -1,23 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 function App() {
   const [billAmount, setBillAmount] = useState(0);
   const [tip, setTip] = useState(0);
   const [tipRate, setTipRate] = useState(0);
   const [total, setTotal] = useState(0);
+  const billAmountRef = useRef(true);
+  const tipRateRef = useRef(true);
 
   function handleSubmit(e) {
     e.preventDefault();
     calculateTip();
     console.log(tip, total);
-  }
-
-  function calculateTip() {
-    const bill = parseFloat(billAmount);
-    const rate = parseFloat(tipRate) / 100;
-    const calculatedTip = bill * rate;
-    setTip(calculatedTip.toFixed(2));
-    setTotal((bill + calculatedTip).toFixed(2));
   }
 
   function handleChange(e, setAmount) {
@@ -29,10 +23,25 @@ function App() {
     }
   }
 
+  function handleClick(setAmount, ref) {
+    if (ref.current) {
+      ref.current = false;
+      setAmount('');
+    }
+  }
+
+  function calculateTip() {
+    const bill = parseFloat(billAmount);
+    const rate = parseFloat(tipRate) / 100;
+    const calculatedTip = bill * rate;
+    setTip(calculatedTip.toFixed(2));
+    setTotal((bill + calculatedTip).toFixed(2));
+  }
+
   return (
     <form onSubmit={handleSubmit} className='form-container'>
       <h1>Simple Tips Calculator</h1>
-      <label htmlFor='bill'>Bill Amount:</label>
+      <label htmlFor='bill'>Bill Amount: RM</label>
       <input
         type='number'
         id='bill'
@@ -42,25 +51,30 @@ function App() {
         min={0}
         max={999999}
         onChange={(e) => handleChange(e, setBillAmount)}
+        onClick={() => handleClick(setBillAmount, billAmountRef)}
       />
 
-      <label htmlFor='tip-rate'>Tip Rate:</label>
-      <input
-        type='number'
-        id='tip-rate'
-        name='tip-rate'
-        value={tipRate}
-        step={1}
-        min={0}
-        max={100}
-        onChange={(e) => handleChange(e, setTipRate)}
-      />
+      <div>
+        <label htmlFor='tip-rate'>Tip Rate: </label>
+        <input
+          type='number'
+          id='tip-rate'
+          name='tip-rate'
+          value={tipRate}
+          step={0.01}
+          min={0}
+          max={100}
+          onChange={(e) => handleChange(e, setTipRate)}
+          onClick={() => handleClick(setTipRate, tipRateRef)}
+        />
+        <span>%</span>
+      </div>
 
       <button type='submit'>Calculate</button>
 
       <div>
-        <p>Tip: {tip}</p>
-        <p>Total: {total}</p>
+        <p>Tip: RM {tip}</p>
+        <p>Total: RM {total}</p>
       </div>
     </form>
   );
