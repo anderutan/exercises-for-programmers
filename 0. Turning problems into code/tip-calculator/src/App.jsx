@@ -16,8 +16,17 @@ function App() {
     const bill = parseFloat(billAmount);
     const rate = parseFloat(tipRate) / 100;
     const calculatedTip = bill * rate;
-    setTip(calculatedTip);
-    setTotal(bill + calculatedTip);
+    setTip(calculatedTip.toFixed(2));
+    setTotal((bill + calculatedTip).toFixed(2));
+  }
+
+  function handleChange(e, setAmount) {
+    const value = e.target.value;
+    if (value >= 0) {
+      setAmount(value);
+    } else {
+      alert('The amount must be more than 0!');
+    }
   }
 
   return (
@@ -29,7 +38,10 @@ function App() {
         id='bill'
         name='bill-amount'
         value={billAmount}
-        onChange={(e) => setBillAmount(e.target.value)}
+        step={0.01}
+        min={0}
+        max={999999}
+        onChange={(e) => handleChange(e, setBillAmount)}
       />
 
       <label htmlFor='tip-rate'>Tip Rate:</label>
@@ -38,7 +50,10 @@ function App() {
         id='tip-rate'
         name='tip-rate'
         value={tipRate}
-        onChange={(e) => setTipRate(e.target.value)}
+        step={1}
+        min={0}
+        max={100}
+        onChange={(e) => handleChange(e, setTipRate)}
       />
 
       <button type='submit'>Calculate</button>
