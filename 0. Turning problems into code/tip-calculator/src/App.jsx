@@ -39,9 +39,11 @@ function App() {
   return (
     <form onSubmit={handleSubmit} className='form-container'>
       <h1>Simple Tips Calculator</h1>
-      <div>
-        <label htmlFor='bill'>Bill Amount</label>
-        <div>
+      <div className='box-section'>
+        <label htmlFor='bill' className='label'>
+          Bill Amount
+        </label>
+        <div className='bill-amount'>
           <span>RM</span>
           <input
             type='number'
@@ -55,9 +57,11 @@ function App() {
             onClick={() => handleClick(setBillAmount, billAmountRef)}
           />
         </div>
-        <div>
-          <div>
-            <label htmlFor='tip-rate'>Tip Rate: </label>
+        <div className='tip-section'>
+          <div className='tip-rate-section'>
+            <label htmlFor='tip-rate' className='label tip-rate'>
+              Tip Rate
+            </label>
             <span>{tipRate}%</span>
           </div>
           <input
@@ -69,27 +73,35 @@ function App() {
             min={0}
             max={100}
             onChange={(e) => handleChange(e, setTipRate)}
+            className='tip-rate-bar'
           />
         </div>
         <div>
-          <button type='submit'>Calculate</button>
+          <button type='submit' className='btn-calculate'>
+            Calculate
+          </button>
 
-          <button onClick={() => window.location.reload()}>Restart</button>
+          <button
+            onClick={() => window.location.reload()}
+            className='btn-restart'
+          >
+            Restart
+          </button>
         </div>
       </div>
 
-      <div>
-        <div>
-          <p>Bill</p>
-          <p>RM {billAmount}</p>
+      <div className='box-section'>
+        <div className='price-section'>
+          <p className='label'>Bill</p>
+          <p className='amount'>RM {billAmount}</p>
         </div>
-        <div>
-          <p>Tip</p>
-          <p>RM {tip}</p>
+        <div className='price-section'>
+          <p className='label'>Tip</p>
+          <p className='amount'>RM {tip}</p>
         </div>
-        <div>
-          <p>Total</p>
-          <p>RM {total}</p>
+        <div className='price-section total-section'>
+          <p className='label'>Total</p>
+          <p className='amount total'>RM {total}</p>
         </div>
       </div>
     </form>
